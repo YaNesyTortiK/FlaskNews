@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Подключаем Bootstrap CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <title>Профиль</title>
+</head>
+<body>
+  <div id="wrapper">
+    <!-- Навигация -->
+    {% include "navigation.html" %}
+    <!-- Контент страницы -->
+    <div class="container my-3">
+      <div class="row">
+        <div class="col-md-8">
+          <label class='name'>
+            Имя: {{ name }}
+            </label><br>
+            <label class='email'>
+            Почта: {{ email }}
+            </label><br>
+            <h2>Ваши новости:</h2><hr>
+            {% for article in news %}
+                <div class="card mb-3">
+                <div class="card-body">
+                    {% if article[5] != None %}
+                    <div id="prev-img-div">
+                    <img class="preview-image" src="{{ article[5] }}">
+                    </div>
+                    {% endif %}
+                    <h5 class="card-title">{{ article[1]|escape }}</h5>
+                    <p class="card-text">{{ article[6]|escape }}<hr>Создано: {{ article[4] }}<br>Автор: {{ article[3] }}</p>
+                    <a href="/news_detail/{{ article[0] }}" class="btn btn-primary">Читать далее</a>
+                    <a href="/news_detail/{{ article[0] }}/remove" class="btn btn-primary">Удалить</a>
+                </div>
+                </div>
+            {% else %}
+                <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">У вас нет новостей</h5>
+                    <p class="card-text"><a href='/create/'>Добавить новость</a></p>
+                </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+    <h5>Ваши категории</h5>
+    <ul class="list-group">
+    <li class="list-group-item"><a href="/profile/">Все новости</a></li>
+    {% for category in categories %}
+        <li class="list-group-item"><a href="/profile/category/{{ category[0] }}">{{ category[1]|escape }}</a></li>
+    {% endfor %}
+    </ul>
+</div>
+      </div>
+    </div>
+    <!-- Подвал -->
+    {% include "footer.html" %}
+  </div>
+    <!-- Подключаем Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
+
+
+{% block content %}
+    
+{% endblock content %}

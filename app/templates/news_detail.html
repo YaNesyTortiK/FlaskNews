@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+Новость: {{ data[1] }}
+{% endblock title %}
+
+{% block content %}
+  <h1>{{ data[1] }}</h1>
+  
+  <hr>
+  {% if data[5] != None %}
+  <p style="text-align: center;"><img src="{{ data[5] }}" width=100% class='image' ></p>
+  <hr>
+  {% endif %}
+  <p>{{ data[7]|replace("\n", "<br>")|safe }}</p>
+  <hr>
+  Автор: {{ data[3] }} (<a href="/author/{{ data[3] }}">Все новости автора</a>)
+  <br>
+  Создано: {{ data[4] }}
+  <br>
+  <a href='/category/{{ data[2] }}'>Ещё новости этой категории</a>
+  <hr>
+  <h3>Комментарии:</h3>
+  {% if is_logged %}
+  <div class="card-body">
+    <h5 class="card-title">Оставить комментарий</h5>
+    <form method="post">
+      <label class='comment-author'>Автор: {{ session.name }}</label>
+      <label class='article-text'>Текст комментария:<br>
+        <textarea rows="10" cols="80" name="text" autocomplete="off" maxlength='400' required></textarea>
+        <!-- <input name="text" autocomplete="off"/> -->
+      </label>
+      <button>Опубликовать</button>
+    </form>
+  </div>
+  {% else %}
+  <div class="card-body">
+    <h5 class="card-title">Чтобы оставить комментарий <a href="/login">войдите</a></h5>
+  </div>
+  {% endif %}
+  <hr>
+  {% for comment in comments %}
+    <p><a href="/author/{{ comment[2] }}">{{ comment[2] }}</a>: {{ comment[3] }}<br>({{ comment[4] }})
+    {% if is_admin %}
+     <a href="/remove_comment/{{ article_id }}/{{ comment[0] }}">Удалить комментарий</a>
+    {% endif %}
+    </p>
+  {% else %}
+    <p>Комментариев нет</p>
+  {% endfor %}
+{% endblock content %}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Подключаем Bootstrap CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <title>Регистрация</title> <!-- Выводите здесь title -->
+</head>
+<body>
+  <div id="wrapper">
+    <!-- Навигация -->
+    {% include "navigation.html" %}
+    <!-- Контент страницы -->
+    <div class="container my-3">
+        <h3 class="title">Регистрация</h3>
+            <div class="box">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }} <a href="{{ url_for('auth.login') }}">Вход</a>.
+                </div>
+            {% endif %}
+            {% endwith %}
+            <form method="POST" action="/signup">
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="email" name="email" placeholder="Почта" autofocus="">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="text" name="name" placeholder="Имя" autofocus="">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="password" name="password" placeholder="Пароль">
+                    </div>
+                </div>
+
+                <button class="button is-block is-info is-large is-fullwidth">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+    <!-- Подвал -->
+    {% include "footer.html" %}
+  </div>
+    <!-- Подключаем Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>

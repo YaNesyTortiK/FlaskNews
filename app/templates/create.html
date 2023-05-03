@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Подключаем Bootstrap CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <title>Добавление новости</title> <!-- Выводите здесь title -->
+</head>
+<body>
+  <div id="wrapper">
+    <!-- Навигация -->
+    {% include "navigation.html" %}
+    <!-- Контент страницы -->
+    <div class="container my-3">
+      <div class="row">
+        <div class="col-md-8">
+          <form method="post">
+            <label class='article-author'>Автор:<hr>{{ name }}</label><hr>
+            <label class='article-category'>Категория:<hr>
+              <input name="category" maxlength='50' autocomplete="category" required/>
+            </label><hr>
+            <label class='article-title'>Заголовок:<hr>
+              <textarea rows="1" cols="80" maxlength='80' name="title" autocomplete="off" required></textarea>
+              <!-- <input name="title" maxlength='50' autocomplete="off"/> -->
+            </label><hr>
+            <label class='article-preview'>Краткое описание:<hr>
+              <textarea rows="2" cols="125" maxlength='125' name="preview" autocomplete="off" required></textarea>
+              <!-- <input name="preview" autocomplete="off"/> -->
+            </label><hr>
+            <label class='article-image'>Ссылка на картинку:<hr>
+              <textarea rows="1" cols="125" name="image" autocomplete="off"></textarea>
+              <!-- <input name="preview" autocomplete="off"/> -->
+            </label><hr><br>
+            <label class='article-text'>Текст новости:<hr>
+              <textarea rows="25" cols="80" name="text" autocomplete="off" required></textarea>
+              <!-- <input name="text" autocomplete="off"/> -->
+            </label>
+            <button>Опубликовать</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Подвал -->
+    {% include "footer.html" %}
+  </div>
+    <!-- Подключаем Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>

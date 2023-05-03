@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Новости
+{% endblock title %}
+
+{% block content %}
+  {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>Главная</h1>
+  {% endif %}
+  <hr>
+  {% for article in news %}
+    <div class="card mb-3">
+      <div class="card-body">
+        {% if article[5] != None %}
+          <div id="prev-img-div">
+          <img class="preview-image" src="{{ article[5] }}">
+          </div>
+        {% endif %}
+        <h5 class="card-title">{{ article[1]|escape }}</h5>
+        <p class="card-text">{{ article[6]|escape }}<hr>Создано: {{ article[4] }}<br>Автор: {{ article[3] }}</p>
+        <a href="/news_detail/{{ article[0] }}" class="btn btn-primary">Читать далее</a>
+        {% if is_admin%}
+          <a href="/news_detail/{{ article[0] }}/remove" class="btn btn-primary">Удалить</a>
+        {% endif %}
+      </div>
+      </ul>
+    </div>
+  {% else %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Пока нет новостей</h5>
+        <p class="card-text">Возможно они появятся попозже</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% include 'pages_swaiper.html' %}
+{% endblock content %}
